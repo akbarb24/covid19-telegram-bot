@@ -3,7 +3,9 @@ en:
     "Halo, selamat datang. Layanan ini sudah aktif.\n 
     Kamu akan mendapatkan update setiap ada perkembangan data kasus COVID-19 di Indonesia.\n
     Silahkan ketik command `/help` untuk mengetahui fitur lain yg tersedia."
-  farewell_message: "Bye! I'll miss you :("
+  farewell_message: 
+    "Terima kasih, telah menggunakan layanan ini.
+    Kamu telah berhenti untuk mendapat update."
   update_message: 
     "Update kasus COVID-19 pada #{last_update} di Indonesia:\n
     - Terkonfirmasi : #{infected}\n
