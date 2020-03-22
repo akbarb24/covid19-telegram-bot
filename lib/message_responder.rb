@@ -9,7 +9,7 @@ class MessageResponder
   def initialize(options)
     @bot = options[:bot]
     @message = options[:message]
-    @user = User.find_or_create_by(userid: message.from.id)
+    @user = User.find_or_create_by(userid: message.from.id, username: message.from.username)
   end
 
   def respond
@@ -17,8 +17,8 @@ class MessageResponder
       handle_start
     end
 
-    on /^\/stop/ do
-      answer_with_farewell_message
+    on /^\/unsubs/ do
+      handle_unsubs
     end
   end
 
@@ -41,12 +41,20 @@ class MessageResponder
 
   def handle_start
     subscribe
-
     answer_with_greeting_message
+  end
+
+  def handle_unsubs
+    unsubscribe
+    answer_with_farewell_message
   end
 
   def subscribe
     User.update(user.id, is_subscribe: true)
+  end
+
+  def unsubscribe
+    User.update(user.id, is_subscribe: false)
   end
 
   def answer_with_greeting_message
