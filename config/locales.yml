@@ -1,3 +1,13 @@
 en:
-  greeting_message: "Hi! Telegram is awesome!"
+  greeting_message: 
+    "Halo, selamat datang. Layanan ini sudah aktif.\n 
+    Kamu akan mendapatkan update setiap ada perkembangan data kasus COVID-19 di Indonesia.\n
+    Silahkan ketik command `/help` untuk mengetahui fitur lain yg tersedia."
   farewell_message: "Bye! I'll miss you :("
+  update_message: 
+    "Update kasus COVID-19 pada #{last_update} di Indonesia:\n
+    - Terkonfirmasi : #{infected}\n
+    - Dalam perawatan : #{active}\n
+    - Sembuh : #{recovered}\n
+    - Meninggal : #{death}\n
+    Sumber data: "
