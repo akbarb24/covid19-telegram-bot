@@ -9,12 +9,12 @@ class MessageResponder
   def initialize(options)
     @bot = options[:bot]
     @message = options[:message]
-    @user = User.find_or_create_by(uid: message.from.id)
+    @user = User.find_or_create_by(userid: message.from.id)
   end
 
   def respond
     on /^\/start/ do
-      answer_with_greeting_message
+      handle_start
     end
 
     on /^\/stop/ do
@@ -39,6 +39,16 @@ class MessageResponder
     end
   end
 
+  def handle_start
+    subscribe
+
+    answer_with_greeting_message
+  end
+
+  def subscribe
+    User.update(user.id, is_subscribe: true)
+  end
+
   def answer_with_greeting_message
     answer_with_message I18n.t('greeting_message')
   end
@@ -48,6 +58,6 @@ class MessageResponder
   end
 
   def answer_with_message(text)
-    MessageSender.new(bot: bot, chat: message.chat, text: text).send
+    MessageSender.new(bot: bot, userid: message.chat.id, username: message.chat.username, text: text).send
   end
 end
