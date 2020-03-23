@@ -1,5 +1,6 @@
 require 'active_record'
 require 'logger'
+require 'erb'
 
 class DatabaseConnector
   class << self
@@ -7,7 +8,7 @@ class DatabaseConnector
       ActiveRecord::Base.logger = Logger.new(active_record_logger_path)
 
       # configuration = YAML::load(IO.read(database_config_path))
-      configuration = YAML.load(ERB.new(File.read('database_config_path')).result)
+      configuration = YAML.load(ERB.new(File.read(database_config_path)).result)
 
       ActiveRecord::Base.establish_connection(configuration)
     end
