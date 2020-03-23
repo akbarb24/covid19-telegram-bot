@@ -1,1 +1,1 @@
-worker: sh bin/bot
+worker: bin/bot
