@@ -4,12 +4,12 @@ en:
     Kamu akan mendapatkan update setiap ada perkembangan data kasus COVID-19 di Indonesia.\n
     Silahkan ketik command `/help` untuk mengetahui fitur lain yg tersedia."
   farewell_message: 
-    "Terima kasih, telah menggunakan layanan ini.
+    "Terima kasih, telah menggunakan layanan ini.\n
     Kamu telah berhenti untuk mendapat update."
   update_message: 
-    "Update kasus COVID-19 pada #{last_update} di Indonesia:\n
-    - Terkonfirmasi : #{infected}\n
-    - Dalam perawatan : #{active}\n
-    - Sembuh : #{recovered}\n
-    - Meninggal : #{death}\n
-    Sumber data: "
+    "Update kasus COVID-19 pada **last_update** di Indonesia:\n
+    - Terkonfirmasi : **infected**\n
+    - Dalam perawatan : **active**\n
+    - Sembuh : **recovered**\n
+    - Meninggal : **death**\n
+    Sumber data: **url**"
