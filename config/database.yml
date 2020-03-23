@@ -1,5 +1,8 @@
 adapter: postgresql
-database: covid19
+database: <%= ENV['DATABASE_NAME'] %>
+host: <%= ENV['DATABASE_HOST'] %>
+user: <%= ENV['DATABASE_USER'] %>
+password: <%= ENV['DATABASE_PASSWORD'] %>
 encoding: unicode
 pool: 5
 timeout: 5000
