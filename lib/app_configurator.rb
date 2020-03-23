@@ -1,4 +1,5 @@
 require 'logger'
+require 'erb'
 
 require './lib/database_connector'
 
@@ -9,7 +10,8 @@ class AppConfigurator
   end
 
   def get_token
-    YAML::load(IO.read('config/secrets.yml'))['telegram_bot_token']
+    # YAML::load(IO.read('config/secrets.yml'))['telegram_bot_token']
+    YAML.load(ERB.new(File.read('config/secrets.yml')).result)['telegram_bot_token']
   end
 
   def get_logger
