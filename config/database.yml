@@ -1,0 +1,5 @@
+adapter: postgresql
+database: covid19
+encoding: unicode
+pool: 5
+timeout: 5000
