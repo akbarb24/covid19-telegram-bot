@@ -9,7 +9,7 @@ class DatabaseConnector
 
       # configuration = YAML::load(IO.read(database_config_path))
       configuration = YAML.load(ERB.new(File.read(database_config_path)).result)
-
+      ActiveRecord::Base.default_timezone = :local
       ActiveRecord::Base.establish_connection(configuration)
     end
 
