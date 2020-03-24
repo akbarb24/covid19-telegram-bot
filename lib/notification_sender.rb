@@ -24,13 +24,14 @@ class NotificationSender
   private
 
   def scheduled_job
-    schedule.every '1m' do 
+    schedule.every '15m' do 
       if check_data?
+        case_data = Case.first
         subscribers = User.where(is_subscribe: true)
 
         unless subscribers.nil?
           subscribers.each do |subs|
-            send_message(subs)
+            send_message(subs, case_data)
           end
         end
       end
@@ -80,15 +81,13 @@ class NotificationSender
     return true
   end
 
-  def send_message(user)
-    MessageSender.new(bot: bot, userid: user.userid, username: user.username, text: message_text).send
+  def send_message(user, case_data)
+    MessageSender.new(bot: bot, userid: user.userid, username: user.username, text: message_text(case_data)).send
   end
 
-  def message_text
-    case_data = Case.first
-
+  def message_text(case_data)
     text = I18n.t('update_message')
-    text = text.gsub('**last_update**', case_data.updated_at.strftime("%Y-%m-%d %H:%M:%S %z"))
+    text = text.gsub('**last_update**', case_data.updated_at.strftime("%Y-%m-%d %H:%M:%S"))
     text = text.gsub('**infected**', case_data.infected.to_s)
     text = text.gsub('**active**', case_data.active.to_s)
     text = text.gsub('**recovered**', case_data.recovered.to_s)
