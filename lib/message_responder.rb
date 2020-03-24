@@ -89,15 +89,17 @@ class MessageResponder
 
   def answer_with_update
     case_data = get_data
-
-    text = I18n.t('update_message')
-    text = text.gsub('**last_update**', case_data.updated_at.strftime("%Y-%m-%d %H:%M:%S"))
-    text = text.gsub('**infected**', case_data.infected.to_s)
-    text = text.gsub('**active**', case_data.active.to_s)
-    text = text.gsub('**recovered**', case_data.recovered.to_s)
-    text = text.gsub('**death**', case_data.death.to_s)
-    text = text.gsub('**url**', 'indonesia-covid-19.mathdro.id')
-    answer_with_message text
+    
+    unless case_data.nil?
+      text = I18n.t('update_message')
+      text = text.gsub('**last_update**', case_data.updated_at.strftime("%Y-%m-%d %H:%M:%S"))
+      text = text.gsub('**infected**', case_data.infected.to_s)
+      text = text.gsub('**active**', case_data.active.to_s)
+      text = text.gsub('**recovered**', case_data.recovered.to_s)
+      text = text.gsub('**death**', case_data.death.to_s)
+      text = text.gsub('**url**', 'indonesia-covid-19.mathdro.id')
+      answer_with_message text
+    end
   end
 
   def answer_with_message(text)
