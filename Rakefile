@@ -11,6 +11,7 @@ namespace :db do
   task :migrate do
     # connection_details = YAML::load(File.open('config/database.yml'))
     connection_details = YAML.load(ERB.new(File.read('config/database.yml')).result)
+    puts connection_details
     ActiveRecord::Base.establish_connection(connection_details)
     ActiveRecord::MigrationContext.new('db/migrate/').migrate
   end
