@@ -17,6 +17,10 @@ class MessageResponder
       handle_start
     end
 
+    on /^\/help/ do
+      handle_help
+    end
+
     on /^\/unsubs/ do
       handle_unsubs
     end
@@ -44,6 +48,10 @@ class MessageResponder
     answer_with_greeting_message
   end
 
+  def handle_help
+    
+  end
+
   def handle_unsubs
     unsubscribe
     answer_with_farewell_message
@@ -63,6 +71,10 @@ class MessageResponder
 
   def answer_with_farewell_message
     answer_with_message I18n.t('farewell_message')
+  end
+
+  def answer_with_help_message
+    answer_with_message I18n.t('help_message')
   end
 
   def answer_with_message(text)
