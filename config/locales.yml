@@ -7,8 +7,8 @@ en:
     "Terima kasih, telah menggunakan layanan ini.\n
     Kamu telah berhenti untuk mendapat update."
   help_message:
-    "/update : untuk mendapatkan data perkembangan kasus COVID-19 terbaru.\n
-    /subscribe : untuk mendapatkan layanan info terupdate setiap ada perubahan data suspect COVID-19.\n
+    "/update : untuk mendapatkan info jumlah data kasus COVID-19 terbaru.\n
+    /subscribe : untuk mendapatkan layanan broadcast info terupdate jumlah data kasus COVID-19.\n
     /unsubs : untuk berhenti dari layanan ini.\n
     /help : jika kamu bingung."
   
