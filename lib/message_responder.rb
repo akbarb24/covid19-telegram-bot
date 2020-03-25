@@ -26,6 +26,10 @@ class MessageResponder
       handle_update
     end
 
+    on /^\/subscribe/ do 
+      
+    end
+
     on /^\/unsubs/ do
       handle_unsubs
     end
@@ -62,6 +66,11 @@ class MessageResponder
     answer_with_update
   end
 
+  def handle_subscribe
+    subscribe
+    answer_with_subsribed
+  end
+
   def handle_unsubs
     unsubscribe
     answer_with_farewell_message
@@ -77,6 +86,10 @@ class MessageResponder
 
   def answer_with_greeting_message
     answer_with_message I18n.t('greeting_message')
+  end
+
+  def answer_with_subsribed
+    answer_with_message I18n.t('subscribe_message')
   end
 
   def answer_with_farewell_message
