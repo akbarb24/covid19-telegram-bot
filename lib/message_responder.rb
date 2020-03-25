@@ -44,7 +44,7 @@ class MessageResponder
       handle_brodcast_command
     end
 
-    on /\pin:/ do
+    on /pin:/ do
       handle_brodcast_execute message.text.split(':')[1]
     end
   end
