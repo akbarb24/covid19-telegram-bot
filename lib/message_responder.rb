@@ -44,8 +44,8 @@ class MessageResponder
       handle_brodcast_command
     end
 
-    on /\d+/ do
-      handle_brodcast_execute message.text
+    on /\pin:/ do
+      handle_brodcast_execute message.text.split(':')[1]
     end
   end
 
@@ -74,8 +74,6 @@ class MessageResponder
   end
 
   def handle_brodcast_execute(pin_input)
-    puts $brodcast_mode
-
     if $brodcast_mode
       if pin_input == pin.to_s
         send_broadcast
