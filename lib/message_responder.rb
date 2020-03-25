@@ -27,7 +27,8 @@ class MessageResponder
     end
 
     on /^\/subscribe/ do 
-      
+      subscribe
+      answer_with_subsribed
     end
 
     on /^\/unsubs/ do
@@ -112,6 +113,8 @@ class MessageResponder
       text = text.gsub('**death**', case_data.death.to_s)
       text = text.gsub('**url**', 'indonesia-covid-19.mathdro.id')
       answer_with_message text
+    else 
+      answer_with_message 'Maaf data belum dapat ditampilkan. Silahkan tunggu beberapa menit lagi. 🙏🏻'
     end
   end
 
