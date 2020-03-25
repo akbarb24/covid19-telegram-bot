@@ -3,13 +3,18 @@ require './models/case'
 require './lib/message_sender'
 
 class MessageResponder
+  attr_reader :pin
   attr_reader :message
   attr_reader :bot
   attr_reader :user
-
+  
+  $broadcast_message = 'OK'
+  $brodcast_mode = false
+  
   def initialize(options)
     @bot = options[:bot]
     @message = options[:message]
+    @pin = options[:pin]
     @user = User.find_or_create_by(userid: message.from.id, username: message.from.username)
   end
 
@@ -34,6 +39,16 @@ class MessageResponder
     on /^\/unsubs/ do
       handle_unsubs
     end
+
+    on /broadcast:/ do
+      handle_brodcast_command
+    end
+
+    on /\d+/ do
+      puts $brodcast_mode
+    
+      handle_brodcast_execute message.text
+    end
   end
 
   private
@@ -50,6 +65,28 @@ class MessageResponder
       when 2
         yield $1, $2
       end
+    end
+  end
+
+  def handle_brodcast_command
+    $broadcast_message = message.text.split(':')[1]
+    $brodcast_mode = true
+
+    answer_with_message 'Please, tell me the PIN'
+  end
+
+  def handle_brodcast_execute(pin_input)
+    puts $brodcast_mode
+
+    if $brodcast_mode
+      if pin_input == pin.to_s
+        send_broadcast
+        $brodcast_mode = false
+      else
+        answer_with_message 'Auth failed'
+      end
+    else
+      answer_with_message pin_input
     end
   end
 
@@ -102,7 +139,7 @@ class MessageResponder
   end
 
   def answer_with_update
-    case_data = get_data
+    case_data = Case.first
     
     unless case_data.nil?
       text = I18n.t('update_message')
@@ -122,7 +159,13 @@ class MessageResponder
     MessageSender.new(bot: bot, userid: message.chat.id, username: message.chat.username, text: text).send
   end
 
-  def get_data
-    Case.first
+  def send_broadcast
+    all_subscribes = User.where(is_subscribe: true)
+
+    unless all_subscribes.nil?
+      all_subscribes.each do |subs|
+        MessageSender.new(bot: bot, userid: subs.userid, username: subs.username, text: $broadcast_message).send
+      end
+    end
   end
 end
