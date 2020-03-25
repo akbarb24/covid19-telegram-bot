@@ -79,6 +79,8 @@ class MessageResponder
     puts $brodcast_mode
 
     if $brodcast_mode
+      puts pin
+
       if pin_input == pin.to_s
         send_broadcast
         $brodcast_mode = false
