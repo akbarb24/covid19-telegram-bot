@@ -149,7 +149,7 @@ class MessageResponder
       text = text.gsub('**url**', 'indonesia-covid-19.mathdro.id')
       answer_with_message text
     else 
-      answer_with_message 'Maaf data belum dapat ditampilkan. Silahkan tunggu beberapa menit lagi. 🙏🏻'
+      answer_with_message "Maaf update data kasus COVID-19 belum dapat ditampilkan.\nSilahkan tunggu beberapa menit lagi. 🙏🏻"
     end
   end
 
