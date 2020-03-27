@@ -1,8 +1,11 @@
 require './models/user'
 require './models/case'
 require './lib/message_sender'
+require './lib/app_configurator'
 
 class MessageResponder
+  attr_reader :logger
+  
   attr_reader :pin
   attr_reader :message
   attr_reader :bot
@@ -16,6 +19,7 @@ class MessageResponder
     @message = options[:message]
     @pin = options[:pin]
     @user = User.find_or_create_by(userid: message.from.id, username: message.from.username)
+    @logger = AppConfigurator.new.get_logger
   end
 
   def respond
@@ -160,7 +164,12 @@ class MessageResponder
 
     unless all_subscribes.nil?
       all_subscribes.each do |subs|
-        MessageSender.new(bot: bot, userid: subs.userid, username: subs.username, text: $broadcast_message).send
+        begin
+          MessageSender.new(bot: bot, userid: subs.userid, username: subs.username, text: $broadcast_message).send
+        rescue
+          logger.error "Error sending message to @#{subs.username}(#{subs.userid})"
+          next
+        end
       end
     end
   end

@@ -24,17 +24,26 @@ class NotificationSender
   private
 
   def scheduled_job
-    schedule.every '15m' do 
-      if check_data?
-        case_data = Case.first
-        subscribers = User.where(is_subscribe: true)
+    begin
+      schedule.every '15m' do 
+        if check_data?
+          case_data = Case.first
+          subscribers = User.where(is_subscribe: true)
 
-        unless subscribers.nil?
-          subscribers.each do |subs|
-            send_message(subs, case_data)
+          unless subscribers.nil?
+            subscribers.each do |subs|
+              begin
+                send_message(subs, case_data)
+              rescue
+                logger.error "Error sending message to @#{subs.username}(#{subs.userid})"
+                next
+              end
+            end
           end
         end
       end
+    rescue => message
+      logger.error message
     end 
   end
 
