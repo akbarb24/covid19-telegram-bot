@@ -96,7 +96,7 @@ class NotificationSender
 
   def message_text(case_data)
     text = I18n.t('update_message')
-    text = text.gsub('**last_update**', case_data.updated_at.strftime("%Y-%m-%d %H:%M:%S"))
+    text = text.gsub('**last_update**', case_data.updated_at.strftime("%d %b %Y %H:%M"))
     text = text.gsub('**infected**', case_data.infected.to_s)
     text = text.gsub('**active**', case_data.active.to_s)
     text = text.gsub('**recovered**', case_data.recovered.to_s)
