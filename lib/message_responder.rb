@@ -36,8 +36,7 @@ class MessageResponder
     end
 
     on /^\/subscribe/ do 
-      subscribe
-      answer_with_subsribed
+      handle_subscribe
     end
 
     on /^\/unsubs/ do
@@ -95,9 +94,10 @@ class MessageResponder
   end
 
   def handle_start
-    subscribe
-    answer_with_greeting_message
-    answer_with_update
+    if subscribe
+      answer_with_greeting_message
+      answer_with_update
+    end
   end
 
   def handle_help
@@ -109,8 +109,9 @@ class MessageResponder
   end
 
   def handle_subscribe
-    subscribe
-    answer_with_subsribed
+    if subscribe
+      answer_with_subsribed
+    end
   end
 
   def handle_unsubs
@@ -123,13 +124,15 @@ class MessageResponder
   end
 
   def subscribe
-    user_exist = User.find_by_user_id(message.chat.id)
-    unless user_exist.nil?
-      User.update(user.id, is_subscribe: true) unless user_exist.is_subscribe
-    else
-      answer_with_message "Maaf layanan sudah aktif. Kamu tidak perlu mengaktifkannya lagi. 🙏🏻"
-    end
+    user_exist = User.find_by(userid: message.chat.id)
     
+    unless user_exist.is_subscribe
+      User.update(user.id, is_subscribe: true)
+      return true
+    else
+      answer_with_message "Maaf layanan sudah aktif sebelumnya.\nKamu tidak perlu mengaktifkannya lagi. 🙏🏻"
+      return false
+    end
   end
 
   def unsubscribe
