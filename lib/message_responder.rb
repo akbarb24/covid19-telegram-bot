@@ -18,7 +18,7 @@ class MessageResponder
     @bot = options[:bot]
     @message = options[:message]
     @pin = options[:pin]
-    @user = User.find_or_create_by(userid: message.from.id)
+    @user = User.find_or_create_by(userid: message.chat.id)
     @logger = AppConfigurator.new.get_logger
   end
 
@@ -123,7 +123,13 @@ class MessageResponder
   end
 
   def subscribe
-    User.update(user.id, is_subscribe: true)
+    user_exist = User.find_by_user_id(message.chat.id)
+    unless user_exist.nil?
+      User.update(user.id, is_subscribe: true) unless user_exist.is_subscribe
+    else
+      answer_with_message "Maaf layanan sudah aktif. Kamu tidak perlu mengaktifkannya lagi. 🙏🏻"
+    end
+    
   end
 
   def unsubscribe
