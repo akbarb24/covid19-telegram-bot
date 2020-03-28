@@ -14,7 +14,10 @@ class AppConfigurator
   end
 
   def get_logger
-    Logger.new(STDOUT, Logger::DEBUG)
+    megabyte = 1024 ** 2
+    one_hundred_megabytes = megabyte * 100
+
+    Logger.new("covid19bot.log", 5, one_hundred_megabytes)
   end
 
   def get_pin
