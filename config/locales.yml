@@ -16,9 +16,13 @@ en:
     /help : jika kamu bingung."
   
   update_message: 
-    "Update kasus COVID-19 pada **last_update** di Indonesia:\n
-    - Terkonfirmasi : **infected**\n
-    - Dalam perawatan : **active**\n
-    - Sembuh : **recovered**\n
-    - Meninggal : **death**\n
-    Sumber data: **url**"
+    "Update kasus *COVID-19* pada `**last_update**` di Indonesia:
+    \n- Terkonfirmasi : `**infected**`
+    \n- Dalam perawatan : `**active**`
+    \n- Sembuh : `**recovered**`
+    \n- Meninggal : `**death**`
+    \nSumber data: **url**"
+  unknown_message:
+    "Kamu mengirim pesan: `**message_text**`.
+    \nMaaf aku tidak mengerti.
+    Silahkan ketik '/help' untuk melihat daftar pesan yg bisa aku ngerti."

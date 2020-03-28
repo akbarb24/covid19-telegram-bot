@@ -18,7 +18,7 @@ class MessageResponder
     @bot = options[:bot]
     @message = options[:message]
     @pin = options[:pin]
-    @user = User.find_or_create_by(userid: message.from.id, username: message.from.username)
+    @user = User.find_or_create_by(userid: message.from.id)
     @logger = AppConfigurator.new.get_logger
   end
 
@@ -44,12 +44,16 @@ class MessageResponder
       handle_unsubs
     end
 
-    on /broadcast:/ do
+    on /^(?!.*((\/start)|(\/help)|(\/update)|(\/subscribe)|(\/unsubs)|(\/broadcast)|(\/pin))).*$/ do
+      handle_unknown_command
+    end
+
+    on /^\/broadcast/ do
       handle_brodcast_command
     end
 
-    on /pin:/ do
-      handle_brodcast_execute message.text.split(':')[1]
+    on /^\/pin/ do
+      handle_brodcast_execute message.text.split(' ==> ')[1]
     end
   end
 
@@ -71,7 +75,7 @@ class MessageResponder
   end
 
   def handle_brodcast_command
-    $broadcast_message = message.text.split(':')[1]
+    $broadcast_message = message.text.split(' ==> ')[1]
     $brodcast_mode = true
 
     answer_with_message 'Please, tell me the PIN'
@@ -112,6 +116,10 @@ class MessageResponder
   def handle_unsubs
     unsubscribe
     answer_with_farewell_message
+  end
+
+  def handle_unknown_command
+    answer_with_message text = I18n.t('unknown_message').gsub('**message_text**', message.text)
   end
 
   def subscribe
