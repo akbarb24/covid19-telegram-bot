@@ -127,7 +127,8 @@ class MessageResponder
     user_exist = User.find_by(userid: message.chat.id)
     
     unless user_exist.is_subscribe
-      User.update(user.id, is_subscribe: true)
+      name = message.chat.type == 'group' ? message.chat.title : message.chat.first_name
+      User.update(user.id, is_subscribe: true, username: name)
       return true
     else
       answer_with_message "Maaf layanan sudah aktif sebelumnya.\nKamu tidak perlu mengaktifkannya lagi. 🙏🏻"
